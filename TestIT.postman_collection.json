@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "29ad2d43-e622-46fe-98fd-5a76d300bc1f",
+		"name": "TestIT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth_Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"postman.setNextRequest('CreateProject')\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"Qwerty123\",\r\n    \"providerId\": \"7fc0581d-c530-4bd4-87f7-8b34d619b8db\",\r\n    \"userName\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1/api/account/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"account",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project List",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{varBearerToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1/api/v2/projects",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"v2",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{varBearerToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"This project created with postman\",\r\n  \"name\": \"Test_from_postman\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1/api/v2/projects",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"v2",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RenameProject",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{varBearerToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"63317c7c-cc45-4337-8ab1-6a699ec0e14e\",\r\n  \"options\": [\r\n    {\r\n      \"id\": \"63317c7c-cc45-4337-8ab1-6a699ec0e14e\",\r\n      \"isDeleted\": true,\r\n      \"value\": \"5 hours\",\r\n      \"isDefault\": true\r\n    }\r\n  ],\r\n  \"type\": \"string\",\r\n  \"isDeleted\": true,\r\n  \"name\": \"TestIT\",\r\n  \"enabled\": true,\r\n  \"required\": true,\r\n  \"isGlobal\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1/api/v2/projects/:projectId/attributes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						":projectId",
+						"attributes"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "projectId",
+							"value": "63317c7c-cc45-4337-8ab1-6a699ec0e14e"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "BearerTestIT",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2YmYwYTI2Mi03NGZhLTRlZjEtYmUzOS05N2M3NzlmZjY0ZjgiLCJpc3MiOiJodHRwOi8vd2ViYXBpIiwiaWF0IjoxNjUxMTM1NjY4LCJzaWQiOiI5ODYyYTI5Zi04MmU0LTQ0NTAtYmZjZC1jY2Y2ZjFhNGEyOTEiLCJzdWIiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJkaXNwbGF5X25hbWUiOiJTeXN0ZW0gQWRtaW5pc3RyYXRvciIsInRlbmFudF9pZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCIsInVzZXJfcm9sZSI6WyJhZG1pbiIsInVzZXIiXSwibmJmIjoxNjUxMTM1NjY4LCJleHAiOjE2NTExODM2NjgsImF1ZCI6Imh0dHA6Ly9mcm9udGVuZCJ9.a6IIRyzBnBCbA9JtCmJXnPiJQGv-6LGvp4SfPcIU7NU"
+		}
+	]
+}
